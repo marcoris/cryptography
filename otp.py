@@ -1,6 +1,6 @@
 from random import SystemRandom
 
-alphabet = "abcdefghijklmnopqrstuvwxyz"
+alphabet = "abcdefghijklmnopqrstuvwxyzöäüABCDEFGHIJKLMNOPQRSTUVWXYZÖÄÜ[](){}!?0123456789"
 
 # Alice gibt Nachricht für Bob ein
 nachricht = input("Nachricht: ")
@@ -28,7 +28,8 @@ print("Chiffrat:\n" + c)
 
 # Chiffre c mittels Schlüssel s zurück XORen = m
 m = int(c, 2) ^ int(s, 2)
-m = '0{:08b}'.format(m)
+m = '0{:08b}'.format(m) if len(nachricht) > 1 else '{:08b}'.format(m)
+
 print("Nachricht in bit:\n" + m)
 
 # m von Bit in Nachricht umwandeln
