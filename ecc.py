@@ -51,7 +51,10 @@ def doubleOrAdd(x_1, x_2, y_1, y_2):
     if x_1 is x_2 and y_1 is y_2:
         return ((3*x_1**2 + a) % mod * (pow((2*y_1), -1, mod))) % mod
     else:
-        return ((y_2 - y_1) % mod * (pow((x_2 - x_1), -1, mod))) % mod
+        if (x_2 - x_1) > 0:
+            return ((y_2 - y_1) % mod * (pow((x_2 - x_1), -1, mod))) % mod
+        else:
+            return 0
 s = doubleOrAdd(x_1, x_2, y_1, y_2)
 
 def calcX3(x_1, x_2, s):
@@ -71,8 +74,8 @@ header = ["k"]
 kP = ["k*P"]
 for i in range(1, (count + 1)):
     header.append(i)
-    s = doubleOrAdd(x_1, x_2, y_1, y_2)
     kP.append(f"({x_2};{y_2})")
+    s = doubleOrAdd(x_1, x_2, y_1, y_2)
     x_3 = calcX3(x_1, x_2, s)
     y_3 = calcY3(x_1, x_3, y_1, s)
     x_2 = x_3
