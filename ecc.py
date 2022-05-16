@@ -69,7 +69,8 @@ print(f"s = {s}")
 x_3 = calcX3(x_1, x_2, s)
 y_3 = calcY3(x_1, x_3, y_1, s)
 print(f"P({x_1},{y_1})" + (' * ' if x_1 is x_2 and y_1 is y_2 else ' + ') + f"Q({x_2},{y_2}) = R({x_3},{y_3})")
-
+print()
+print("Addition:")
 header = ["k"]
 kP = ["k*P"]
 for i in range(1, (count + 1)):
