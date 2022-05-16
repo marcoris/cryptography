@@ -2,8 +2,8 @@ from random import randint
 
 # Der Empfänger A veröffentlicht als öffentlichen Schlüssel drei Zahlen p, g und a.
 # Hierbei ist p eine starke Primzahl:
-p = 107
-g = 3
+p = 467
+g = 2
 print(f'Hierbei ist {p} eine starke Primzahl')
 
 # Um a zu berechnen, wählt A eine Zufallszahl u mit 1<u<p-1:
@@ -16,7 +16,7 @@ print(f'und berechnet a = g^u mod p: {a=}')
 print(f'Der öffentliche Schlüssel von A ist also: {p=}, {g=}, {a=}')
 
 # Der Sender B möchte eine Nachricht m an A schicken:
-m = 23
+m = 33
 # Hierzu wählt B zunächst eine Zufallszahl v:
 v = randint(1, 1000)
 # und berechnet b = g^v mod p:
