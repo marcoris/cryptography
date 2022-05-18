@@ -7,7 +7,7 @@ a = 3
 b = 2
 mod = 7
 
-x_1 = 0
+x_1 = 5
 y_1 = 3
 
 x_2 = 2
@@ -53,7 +53,10 @@ def pointDouble(x_1, y_1):
 
 # punktaddition
 def pointAdd(x_1, x_2, y_1, y_2):
-    return ((y_2 - y_1) % mod * (pow((x_2 - x_1), -1, mod))) % mod
+    if (x_2 - x_1) != 0:
+        return ((y_2 - y_1) % mod * (pow((x_2 - x_1), -1, mod))) % mod
+    else:
+        return 0
 
 if x_1 is x_2 and y_1 is y_2:
     s = pointDouble(x_1, y_1)
