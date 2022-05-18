@@ -3,15 +3,15 @@ from tabulate import tabulate
 aX = []
 aY = []
 header = []
-a = 3
-b = 2
-mod = 7
+a = 2
+b = 3
+mod = 17
 
 x_1 = 5
-y_1 = 3
+y_1 = 1
 
-x_2 = 2
-y_2 = 3
+x_2 = 5
+y_2 = 1
 
 for i, x, y in zip(range(mod), range(mod), range(mod)):
     header.append(i)
@@ -84,7 +84,7 @@ posY = y_1
 for i in range(1, (count + 1)):
     header.append(i)
     kP.append(f"({posX};{posY})")
-    if i > 7:
+    if i > count:
         break
     if firstDouble:
         s = pointDouble(x_1, y_1)
