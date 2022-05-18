@@ -3,15 +3,15 @@ from tabulate import tabulate
 aX = []
 aY = []
 header = []
-a = 1
-b = 6
-mod = 11
+a = 3
+b = 2
+mod = 7
 
-x_1 = 2
-y_1 = 4
+x_1 = 0
+y_1 = 3
 
 x_2 = 2
-y_2 = 4
+y_2 = 3
 
 for i, x, y in zip(range(mod), range(mod), range(mod)):
     header.append(i)
@@ -30,8 +30,9 @@ print()
 print(f"x^3 + {a}x + {b} mod {mod}")
 print(tabulate([aX], headers=header, tablefmt='orgtbl'))
 print()
-print(f"P({x_1}, {y_1}) liegt" + ("" if Y1 == X1 else " NICHT") + " auf der Kurve")
-print(f"P({x_2}, {y_2}) liegt" + ("" if Y2 == X2 else " NICHT") + " auf der Kurve")
+print(f"P({x_1};{y_1}) liegt" + ("" if Y1 == X1 else " NICHT") + " auf der Kurve")
+if x_1 != x_2 or y_1 != y_2:
+    print(f"Q({x_2};{y_2}) liegt" + ("" if Y2 == X2 else " NICHT") + " auf der Kurve")
 print()
 
 count = 0
@@ -44,42 +45,57 @@ for i in range(mod):
 
     t = print(f"Für x = {i}: gibt es {'keine Punkte' if d == '' else 'die Punkte ' + d[:-4]}")
 
-print(f"Somit gibt es {count} Punkte + Nullpunkt = {count + 1} Punkte. E = {count + 1}")
+print(f"Somit gibt es {count} Punkte + Nullpunkt = {count + 1} Punkte, d.h. |E| = {count + 1}")
 
-# punktaddition/-doppelung
-def doubleOrAdd(x_1, x_2, y_1, y_2):
-    if x_1 is x_2 and y_1 is y_2:
-        return ((3*x_1**2 + a) % mod * (pow((2*y_1), -1, mod))) % mod
-    else:
-        if (x_2 - x_1) > 0:
-            return ((y_2 - y_1) % mod * (pow((x_2 - x_1), -1, mod))) % mod
-        else:
-            return 0
-s = doubleOrAdd(x_1, x_2, y_1, y_2)
+# punktdoppelung
+def pointDouble(x_1, y_1):
+    return ((3*pow(x_1, 2) + a) % mod * (pow((2*y_1), -1, mod))) % mod
+
+# punktaddition
+def pointAdd(x_1, x_2, y_1, y_2):
+    return ((y_2 - y_1) % mod * (pow((x_2 - x_1), -1, mod))) % mod
+
+if x_1 is x_2 and y_1 is y_2:
+    s = pointDouble(x_1, y_1)
+else:
+    s = pointAdd(x_1, x_2, y_1, y_2)
 
 def calcX3(x_1, x_2, s):
-    return (s**2 - x_1 - x_2) % mod
+    return (pow(s, 2) - x_1 - x_2) % mod
 
 def calcY3(x_1, x_3, y_1, s):
     return (s * (x_1 - x_3) - y_1) % mod
 
-print(f"s = {s}")
-
-# Add
+# Add/Double
 x_3 = calcX3(x_1, x_2, s)
 y_3 = calcY3(x_1, x_3, y_1, s)
-print(f"P({x_1},{y_1})" + (' * ' if x_1 is x_2 and y_1 is y_2 else ' + ') + f"Q({x_2},{y_2}) = R({x_3},{y_3})")
+
+print(f"P({x_1},{y_1}) + " + ("P" if x_1 is x_2 and y_1 is y_2 else "Q") + f"({x_2},{y_2}) = " + ("2P" if x_1 is x_2 and y_1 is y_2 else "R") + f"({x_3},{y_3})")
 print()
-print("Addition:")
+print("Für alle P das k*P:")
 header = ["k"]
 kP = ["k*P"]
+firstDouble = True
+posX = x_1
+posY = y_1
 for i in range(1, (count + 1)):
     header.append(i)
-    kP.append(f"({x_2};{y_2})")
-    s = doubleOrAdd(x_1, x_2, y_1, y_2)
-    x_3 = calcX3(x_1, x_2, s)
-    y_3 = calcY3(x_1, x_3, y_1, s)
-    x_2 = x_3
-    y_2 = y_3
+    kP.append(f"({posX};{posY})")
+    if i > 7:
+        break
+    if firstDouble:
+        s = pointDouble(x_1, y_1)
+        x_3 = calcX3(x_1, x_1, s)
+        y_3 = calcY3(x_1, x_3, y_1, s)
+        firstDouble = False
+    else:
+        s = pointAdd(x_1, x_2, y_1, y_2)
+        x_3 = calcX3(x_1, x_2, s)
+        y_3 = calcY3(x_1, x_3, y_1, s)
+
+    posX = x_3
+    posY = y_3
+    x_2 = posX
+    y_2 = posY
 
 print(tabulate([kP], headers=header, tablefmt='orgtbl'))
