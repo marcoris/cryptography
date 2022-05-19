@@ -4,25 +4,25 @@ aX = []
 aY = []
 header = []
 a = 2
-b = 3
+b = 2
 mod = 17
 
 x_1 = 5
 y_1 = 1
 
-x_2 = 5
-y_2 = 1
+x_2 = 7
+y_2 = 6
 
 for i, x, y in zip(range(mod), range(mod), range(mod)):
     header.append(i)
     aY.append(y**2 % mod)
     aX.append((x**3 + a*x + b) % mod)
 
-Y1 = y_1**2 % mod
-X1 = (x_1**3 + a*x_1 + b) % mod
+X1 = (pow(x_1, 3) + a*x_1 + b) % mod
+Y1 = pow(y_1, 2) % mod
 
-Y2 = y_2**2 % mod
-X2 = (x_2**3 + a*x_2 + b) % mod
+X2 = (pow(x_2, 3) + a*x_2 + b) % mod
+Y2 = pow(y_2, 2) % mod
 
 print(f"y^2 mod {mod}")
 print(tabulate([aY], headers=header, tablefmt='orgtbl'))
@@ -49,12 +49,12 @@ print(f"Somit gibt es {count} Punkte + Nullpunkt = {count + 1} Punkte, d.h. |E| 
 
 # punktdoppelung
 def pointDouble(x_1, y_1):
-    return ((3*pow(x_1, 2) + a) % mod * (pow((2*y_1), -1, mod))) % mod
+    return ((3*pow(x_1, 2) + a) * (pow((2*y_1), -1, mod))) % mod
 
 # punktaddition
 def pointAdd(x_1, x_2, y_1, y_2):
     if (x_2 - x_1) != 0:
-        return ((y_2 - y_1) % mod * (pow((x_2 - x_1), -1, mod))) % mod
+        return ((y_2 - y_1) * (pow((x_2 - x_1), -1, mod))) % mod
     else:
         return 0
 
