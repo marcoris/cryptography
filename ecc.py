@@ -3,15 +3,15 @@ from tabulate import tabulate
 aX = []
 aY = []
 header = []
-a = 2
+a = 3
 b = 2
-mod = 17
+mod = 7
 
 x_1 = 5
-y_1 = 1
+y_1 = 4
 
-x_2 = 7
-y_2 = 6
+x_2 = 5
+y_2 = 3
 
 for i, x, y in zip(range(mod), range(mod), range(mod)):
     header.append(i)
@@ -81,9 +81,12 @@ kP = ["k*P"]
 firstDouble = True
 posX = x_1
 posY = y_1
+firstPosX = posX
+counter = 0
 for i in range(1, (count + 1)):
     header.append(i)
     kP.append(f"({posX};{posY})")
+    counter = counter + 1
     if i > count:
         break
     if firstDouble:
@@ -92,6 +95,8 @@ for i in range(1, (count + 1)):
         y_3 = calcY3(x_1, x_3, y_1, s)
         firstDouble = False
     else:
+        if firstPosX == posX:
+            break;
         s = pointAdd(x_1, x_2, y_1, y_2)
         x_3 = calcX3(x_1, x_2, s)
         y_3 = calcY3(x_1, x_3, y_1, s)
@@ -100,5 +105,7 @@ for i in range(1, (count + 1)):
     posY = y_3
     x_2 = posX
     y_2 = posY
+header.append(counter + 1)
+kP.append("O")
 
 print(tabulate([kP], headers=header, tablefmt='orgtbl'))
