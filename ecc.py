@@ -1,3 +1,4 @@
+from colorama import Fore, Style
 from tabulate import tabulate
 
 aX = []
@@ -7,11 +8,35 @@ a = 3
 b = 2
 mod = 7
 
-x_1 = 5
-y_1 = 4
+x_1 = 0
+y_1 = 3
 
-x_2 = 5
-y_2 = 3
+x_2 = 0
+y_2 = 4
+
+def calcX3(x_1, x_2, s):
+    return (pow(s, 2) - x_1 - x_2) % mod
+
+def calcY3(x_1, x_3, y_1, s):
+    return (s * (x_1 - x_3) - y_1) % mod
+
+def isprime(num):
+    a = int(num**0.5)+1
+    for n in range(2, a):
+        if num%n==0:
+            return False
+    return True
+
+# punktdoppelung
+def pointDouble(x_1, y_1):
+    return ((3*pow(x_1, 2) + a) * (pow((2*y_1), -1, mod))) % mod
+
+# punktaddition
+def pointAdd(x_1, x_2, y_1, y_2):
+    if (x_2 - x_1) != 0:
+        return ((y_2 - y_1) * (pow((x_2 - x_1), -1, mod))) % mod
+    else:
+        return 0
 
 for i, x, y in zip(range(mod), range(mod), range(mod)):
     header.append(i)
@@ -45,29 +70,15 @@ for i in range(mod):
 
     t = print(f"Für x = {i}: gibt es {'keine Punkte' if d == '' else 'die Punkte ' + d[:-4]}")
 
-print(f"Somit gibt es {count} Punkte + Nullpunkt = {count + 1} Punkte, d.h. |E| = {count + 1}")
+E = count + 1
 
-# punktdoppelung
-def pointDouble(x_1, y_1):
-    return ((3*pow(x_1, 2) + a) * (pow((2*y_1), -1, mod))) % mod
-
-# punktaddition
-def pointAdd(x_1, x_2, y_1, y_2):
-    if (x_2 - x_1) != 0:
-        return ((y_2 - y_1) * (pow((x_2 - x_1), -1, mod))) % mod
-    else:
-        return 0
+print(f"Somit gibt es {count} Punkte + Nullpunkt = {E} Punkte, d.h. |E| = {E}")
+print("Ausserdem ist E " + ("" if isprime(E) else f"{Fore.RED}nicht{Style.RESET_ALL} ") + "prim")
 
 if x_1 is x_2 and y_1 is y_2:
     s = pointDouble(x_1, y_1)
 else:
     s = pointAdd(x_1, x_2, y_1, y_2)
-
-def calcX3(x_1, x_2, s):
-    return (pow(s, 2) - x_1 - x_2) % mod
-
-def calcY3(x_1, x_3, y_1, s):
-    return (s * (x_1 - x_3) - y_1) % mod
 
 # Add/Double
 x_3 = calcX3(x_1, x_2, s)
@@ -83,7 +94,7 @@ posX = x_1
 posY = y_1
 firstPosX = posX
 counter = 0
-for i in range(1, (count + 1)):
+for i in range(1, (E)):
     header.append(i)
     kP.append(f"({posX};{posY})")
     counter = counter + 1
