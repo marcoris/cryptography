@@ -4,14 +4,14 @@ from tabulate import tabulate
 aX = []
 aY = []
 header = []
-a = 3
-b = 2
-mod = 7
+a = 1
+b = 6
+mod = 11
 
-x_1 = 0
-y_1 = 3
+x_1 = 2
+y_1 = 4
 
-x_2 = 0
+x_2 = 2
 y_2 = 4
 
 def calcX3(x_1, x_2, s):
